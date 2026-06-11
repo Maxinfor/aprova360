@@ -1,0 +1,1232 @@
+<html lang="pt-br"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APROVAÇÃO 360</title>
+
+<style>
+:root {
+    --bg-main: #060814;
+    --bg-sidebar: #0b0f19;
+    --bg-card: #13192b;
+    --bg-input: #090d16;
+    --border-color: #222f47;
+    --border-glow: #2f4366;
+    --text-main: #f1f5f9;
+    --text-muted: #64748b;
+    --primary: #3b82f6;
+    --primary-gradient: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    --primary-hover: #60a5fa;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #f43f5e;
+    --accent-amber: #f59e0b;
+}
+
+*{ box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+body {
+    margin: 0;
+    background: var(--bg-main);
+    color: var(--text-main);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    letter-spacing: -0.01em;
+}
+
+/* SIDEBAR */
+.left {
+    width: 310px;
+    background: var(--bg-sidebar);
+    padding: 26px;
+    overflow-y: auto;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.left h3 { 
+    color: #fff; 
+    margin: 0; 
+    font-size: 1.4rem; 
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-title { 
+    font-size: 0.7rem; 
+    text-transform: uppercase; 
+    color: var(--text-muted); 
+    font-weight: 700; 
+    margin-top: 10px; 
+    margin-bottom: -8px; 
+    letter-spacing: 1.5px; 
+}
+
+.input-group { display: flex; gap: 8px; }
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-input);
+    color: white;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+input:focus, textarea:focus { 
+    border-color: var(--primary); 
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #1e293b;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+button:hover { 
+    background: #2d3748; 
+    transform: translateY(-1px); 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-primary { background: var(--primary-gradient); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2); }
+.btn-primary:hover { background: linear-gradient(135deg, #60a5fa, #2563eb); }
+.btn-danger { background: linear-gradient(135deg, #e11d48, #9f1239); }
+.btn-danger:hover { background: #f43f5e; }
+.btn-share { background: linear-gradient(135deg, #4f46e5, #3730a3); width: 100%; }
+.btn-share:hover { background: #6366f1; }
+.btn-print { background: linear-gradient(135deg, #0891b2, #0e7490); width: 100%; }
+.btn-print:hover { background: #06b6d4; }
+
+.panel-actions { display: flex; flex-direction: column; gap: 8px; }
+
+.disc-btn {
+    width: 100%;
+    padding: 16px;
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+.disc-btn:hover { background: rgba(30, 41, 59, 0.6); border-color: var(--border-glow); }
+.disc-btn.active { 
+    background: var(--primary-gradient); 
+    border-color: #60a5fa; 
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+.disc-btn .counter { background: rgba(0, 0, 0, 0.3); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+
+/* PAINEL PRINCIPAL */
+.right {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background: var(--bg-main);
+}
+
+.hero-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0d9488 100%);
+    padding: 35px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.hero-banner h1 { margin: 0; font-size: 2.2rem; font-weight: 900; letter-spacing: -0.04em; }
+.hero-banner p { margin: 8px 0 0 0; color: #94a3b8; font-size: 1rem; }
+
+/* CARDS LUXUOSOS */
+.card {
+    background: var(--bg-card);
+    padding: 28px;
+    margin-bottom: 25px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 18px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;}
+.card-header h2 { margin: 0; font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+
+/* SELETOR DE MODOS */
+.view-mode-selector {
+    display: flex;
+    background: #090d16;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+    gap: 4px;
+}
+.view-mode-selector button {
+    flex: 1;
+    padding: 12px;
+    font-size: 0.85rem;
+    background: transparent;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+.view-mode-selector button:hover {
+    color: var(--text-main);
+    background: rgba(255,255,255,0.02);
+}
+.view-mode-selector button.active {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* BARRA REFAZER FILTROS */
+.filter-reset-bar {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px dashed rgba(59, 130, 246, 0.3);
+    padding: 12px 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    gap: 10px;
+}
+
+/* BOTÃO DESFAZER FLUTUANTE / INTEGRADO */
+.btn-undo-action {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+    color: white !important;
+    padding: 6px 14px !important;
+    font-size: 0.8rem !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2) !important;
+}
+.btn-undo-action:hover {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+}
+
+/* CONTAINER DE FILAS (MATÉRIAS) */
+.materia-list-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+details.materia-row {
+    background: rgba(15, 23, 42, 0.4) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    display: block !important;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+details.materia-row[open] {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+}
+
+details.materia-row.hidden-step,
+details.materia-row.user-hidden {
+    display: none !important;
+}
+
+summary.materia-header-trigger {
+    padding: 18px 22px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    color: #fff !important;
+    list-style: none !important;
+    outline: none !important;
+}
+summary.materia-header-trigger::-webkit-details-marker { display: none !important; }
+
+.mat-title-left { display: flex !important; align-items: center !important; gap: 12px !important; }
+
+.chevron-icon {
+    font-size: 0.75rem !important;
+    color: var(--text-muted) !important;
+    transition: transform 0.2s ease !important;
+    display: inline-block !important;
+}
+details[open] .chevron-icon { transform: rotate(90deg) !important; color: var(--primary) !important; }
+
+/* BOTÃO OCULTAR NO CARD */
+.btn-hide-card {
+    background: rgba(244, 63, 94, 0.1);
+    color: #fb7185;
+    border: 1px solid rgba(244, 63, 94, 0.2);
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.btn-hide-card:hover {
+    background: #f43f5e;
+    color: white;
+    transform: scale(1.03);
+}
+
+.materia-body-content {
+    padding: 22px !important;
+    border-top: 1px solid rgba(34, 47, 71, 0.5) !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+}
+
+@media (max-width: 768px) {
+    .materia-body-content { grid-template-columns: 1fr !important; gap: 16px !important; }
+}
+
+.badge { padding: 5px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge.ok { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.badge.bad { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+
+/* RESUMOS / MNEMÔNICOS */
+.box-mnemonico {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(217, 119, 6, 0.02));
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-left: 4px solid var(--accent-amber);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: #ffedd5;
+    margin-bottom: 16px;
+}
+.box-mnemonico b { color: #fba11d; display: block; margin-bottom: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.box-mnemonico.vazio {
+    color: #475569; font-style: italic; border-left-color: #334155;
+    background: rgba(255,255,255,0.01); border-color: rgba(255,255,255,0.04);
+}
+
+/* CRONÔMETRO */
+.timer-box {
+    background: #090d16; padding: 10px 14px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; border: 1px solid var(--border-color);
+}
+.timer-display { font-family: 'Courier New', Courier, monospace; font-size: 1.2rem; color: #60a5fa; font-weight: 700; }
+.timer-display.running { color: #10b981; text-shadow: 0 0 8px rgba(16,185,129,0.4); animation: pulse 2s infinite; }
+
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+
+.stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; }
+.stats-row span { display: flex; align-items: center; gap: 4px; }
+
+/* PROGRESS BAR */
+.progress-container { margin: 5px 0 16px 0; }
+.progress-info { display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; margin-bottom: 6px; }
+.bar { background: #1e293b; height: 8px; border-radius: 10px; overflow: hidden; }
+.fill { height: 100%; width: 0%; transition: width 0.5s ease; }
+.fill.ok { background: var(--success); box-shadow: 0 0 8px var(--success); }
+.fill.warn { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
+.fill.bad { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+
+/* MAT ACTIONS */
+.mat-actions { display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 12px; }
+.mat-actions button { padding: 8px 12px; font-size: 0.8rem; flex: 1; min-width: 44px; border-radius: 8px; background: #1e293b; }
+
+/* MODAL */
+.modal-backdrop {
+    position: fixed; top:0; left:0; width:100vw; height:100vh;
+    background: rgba(3, 5, 11, 0.75); backdrop-filter: blur(8px);
+    display: none; justify-content: center; align-items: center; z-index: 1000;
+}
+.modal {
+    background: #0f172a; border: 1px solid #334155;
+    padding: 30px; border-radius: 24px; width: 90%; max-width: 460px;
+}
+.modal h3 { margin: 0 0 16px 0; color: #fff; font-size: 1.3rem; font-weight: 700; }
+.modal-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+
+@media print {
+    body { background: white !important; color: black !important; display: block !important; height: auto !important; overflow: visible !important; }
+    .left, .hero-banner, .card-header, .mat-actions, .timer-box, .progress-container, .badge, .chevron-icon, .view-mode-selector, .btn-hide-card, .filter-reset-bar { display: none !important; }
+    .right { padding: 0 !important; overflow: visible !important; }
+    .card { background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
+    .materia-list-container { display: block !important; }
+    details.materia-row { background: transparent !important; border: none !important; border-bottom: 2px solid #000 !important; padding: 10px 0 !important; display: block !important; }
+    .materia-body-content { display: block !important; padding: 10px 0 !important; border: none !important; }
+    .print-only-title { display: block !important; text-align: center; margin-bottom: 30px; font-size: 2rem; font-weight: 800; border-bottom: 3px solid black; padding-bottom: 10px; }
+    .print-disc-section { margin-top: 40px; }
+    .print-disc-section h2 { border-bottom: 1px solid #000; padding-bottom: 5px; color: black !important; font-size: 1.6rem; margin-bottom: 15px; }
+    .box-mnemonico { background: #f3f4f6 !important; border: 1px solid #9ca3af !important; border-left: 5px solid #000 !important; color: #000 !important; display: block !important; font-size: 1rem; }
+    .box-mnemonico b { color: #000 !important; }
+    .box-mnemonico.vazio { display: none !important; }
+    summary.materia-header-trigger { font-size: 1.3rem !important; color: black !important; padding: 0 !important; }
+}
+.print-only-title { display: none; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<!-- Manifesto PWA -->
+<link rel="manifest" href="manifest.json">
+<!-- Suporte para iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Aprova 360">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+
+<div class="left">
+    <h3>🚀 APROVAÇÃO 360</h3>
+    
+    <div class="input-group">
+        <input id="discName" placeholder="Nova disciplina...">
+        <button class="btn-primary" onclick="addDisc()">➕</button>
+    </div>
+
+    <span class="section-title">Navegação</span>
+    <div class="panel-actions">
+        <button onclick="studyPlan()">🎯 Missão de Hoje</button>
+    </div>
+
+    <span class="section-title">Anotações</span>
+    <button class="btn-print" title="Imprimir todos os mnemônicos" onclick="printAllNotes()">🖨️ Imprimir Resumos</button>
+
+    <span class="section-title">Controle Integrado</span>
+    <button class="btn-share" style="background: linear-gradient(135deg, #10b981, #059669); font-size: 0.85rem; padding: 14px;" onclick="exportAsSelfContainedHTML()">💾 Salvar Estado Atual (Baixar HTML)</button>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); width: 100%; margin: 10px 0;">
+    <span class="section-title">Suas Disciplinas</span>
+    <div id="discList" style="display: flex; flex-direction: column; gap: 8px;"><button class="disc-btn " onclick="openDisc(0)"><span>📚 LÍNGUA PORTUGUESA</span><span class="counter">20</span></button><button class="disc-btn active" onclick="openDisc(1)"><span>📚 CONHECIMENTOS DO DISTRITO FEDERAL</span><span class="counter">4</span></button><button class="disc-btn " onclick="openDisc(2)"><span>📚 ESTATUTO DO SERVIDOR</span><span class="counter">1</span></button><button class="disc-btn " onclick="openDisc(3)"><span>📚 REESTRUTURA DA CARREIRA  PÚBLICA  DE ASSISTENCIA SOCIAL DO DF</span><span class="counter">13</span></button><button class="disc-btn " onclick="openDisc(4)"><span>📚 POLÍTICA PARA MULHERES</span><span class="counter">2</span></button><button class="disc-btn " onclick="openDisc(5)"><span>📚 LEGISLAÇÃO E NOÇÕES DE PRIMEIROS SOCORROS</span><span class="counter">9</span></button><button class="disc-btn " onclick="openDisc(6)"><span>📚 FUNDAMENTOS, ORGANIZAÇÃO, GESTÃO E MARCOS OPERACIONAIS DO SUAS</span><span class="counter">3</span></button><button class="disc-btn " onclick="openDisc(7)"><span>📚 PROGRAMAS, BENEFÍCIOS E INSTRUMENTOS SOCIOASSISTENCIAIS DO DISTRITO FEDERAL</span><span class="counter">5</span></button><button class="disc-btn " onclick="openDisc(8)"><span>📚 NOÇÕES DE DIREITO CONSTITUCIONAL,</span><span class="counter">2</span></button><button class="disc-btn " onclick="openDisc(9)"><span>📚 DIREITO ADMINISTRATIVO</span><span class="counter">3</span></button><button class="disc-btn " onclick="openDisc(10)"><span>📚 ESTATUTO DO SERVIDOR</span><span class="counter">13</span></button><button class="disc-btn " onclick="openDisc(11)"><span>📚 ROTINAS ADMINISTRATIVAS</span><span class="counter">3</span></button><button class="disc-btn " onclick="openDisc(12)"><span>📚 ARQUIVOLOGIA</span><span class="counter">2</span></button><button class="disc-btn " onclick="openDisc(13)"><span>📚 ESTATUTO DO SERVIDOR</span><span class="counter">13</span></button></div>
+</div>
+
+<div class="right">
+    <div id="printHeader" class="print-only-title">🏆 CADERNO GERAL DE MNEMÔNICOS E RESUMOS</div>
+    <div class="hero-banner" id="heroBanner">
+        <h1>🏆 APROVAÇÃO 360</h1>
+        <p>Planeje de forma ativa • Execute com precisão • Memorize com Mnemônicos</p>
+    </div>
+    <div id="content">
+        <div class="card">
+            <div class="card-header">
+                <h2>📚 CONHECIMENTOS DO DISTRITO FEDERAL</h2>
+                <div style="display:flex; gap:8px;">
+                    <button style="background: #222f47;" title="Editar Disciplina" onclick="openEditDiscModal(1)">✏️ Editar Nome</button>
+                    <button class="btn-primary" onclick="openAddMatModal(1)">➕ Nova Matéria</button>
+                    <button class="btn-danger" style="padding:12px;" onclick="openConfirmModal('DEL_DISC', {di:1})">❌</button>
+                </div>
+            </div>
+
+            <div class="view-mode-selector">
+                <button class="" onclick="changeStudyMode('tudo')">👁️ Ver Tudo Aberto</button>
+                <button class="active" onclick="changeStudyMode('foco')">🎯 Modo Foco (Escolha Livre)</button>
+                <button class="" onclick="changeStudyMode('sequencial')">🔀 Seguir Ordem da Fila</button>
+            </div>
+
+            
+
+            <div class="materia-list-container">
+    
+            <details class="materia-row ">
+                <summary class="materia-header-trigger">
+                    <div class="mat-title-left">
+                        <span class="chevron-icon">▶</span>
+                        <span>1 Tópicos atuais e relevantes acerca da realidade étnica, social, histórica, geográfica, cultural, política e
+econômica do Distrito Federal</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <button class="btn-hide-card" onclick="hideMateriaCard(event, 1, 0)" title="Fazer este card sumir da tela provisoriamente">👁️ Ocultar</button>
+                        <span class="badge bad">Pendente</span>
+                    </div>
+                </summary>
+
+                <div class="materia-body-content">
+                    <div>
+                        <div class="timer-box">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.85rem; color:var(--text-muted);">⏱️ Foco:</span>
+                                <div class="timer-display" id="t-disp-1_0">00:00:00</div>
+                            </div>
+                            <div style="display:flex; gap:4px;">
+                                <button id="t-btn-1_0" style="padding:8px 16px; background:#1e293b; font-size:0.85rem;" onclick="toggleTimer(1,0)">▶️</button>
+                            </div>
+                        </div>
+
+                        <div class="box-mnemonico vazio">
+                            <b>💡 Mnemônico Ativo:</b>*(Clique em 📝 Notas para criar)*
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="stats-row">
+                            <span>🎯 Acertos: <b>0</b></span>
+                            <span>❌ Erros: <b>0</b></span>
+                            <span style="grid-column: span 2;">📝 Resolvidas: 0 questões</span>
+                            <span style="grid-column: span 2;">📅 Agenda: <b>Sem data</b></span>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Taxa de Acertos</span>
+                                <strong>0%</strong>
+                            </div>
+                            <div class="bar"><div class="fill bad" style="width: 0%"></div></div>
+                        </div>
+
+                        <div class="mat-actions">
+                            <button title="Inverter status" onclick="toggleStatus(1,0)">✔ Concluir</button>
+                            <button title="Renomear Matéria" style="background:#222f47;" onclick="openEditMatNameModal(1,0)">✏️ Renomear</button>
+                            <button title="Mnemônicos" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2);" onclick="openNotesModal(1,0)">📝 Notas</button>
+                            <button title="Questões" onclick="openQtdModal(1,0)">📊 +Q</button>
+                            <button title="Revisão" onclick="openReviewModal(1,0)">📅</button>
+                            <button class="btn-danger" style="background:transparent; border:1px solid rgba(244,63,94,0.2); color:#fb7185;" onclick="openConfirmModal('DEL_MAT', {di:1, mi:0})">❌</button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        
+            <details class="materia-row ">
+                <summary class="materia-header-trigger">
+                    <div class="mat-title-left">
+                        <span class="chevron-icon">▶</span>
+                        <span>RIDE.</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <button class="btn-hide-card" onclick="hideMateriaCard(event, 1, 1)" title="Fazer este card sumir da tela provisoriamente">👁️ Ocultar</button>
+                        <span class="badge bad">Pendente</span>
+                    </div>
+                </summary>
+
+                <div class="materia-body-content">
+                    <div>
+                        <div class="timer-box">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.85rem; color:var(--text-muted);">⏱️ Foco:</span>
+                                <div class="timer-display" id="t-disp-1_1">00:00:00</div>
+                            </div>
+                            <div style="display:flex; gap:4px;">
+                                <button id="t-btn-1_1" style="padding:8px 16px; background:#1e293b; font-size:0.85rem;" onclick="toggleTimer(1,1)">▶️</button>
+                            </div>
+                        </div>
+
+                        <div class="box-mnemonico vazio">
+                            <b>💡 Mnemônico Ativo:</b>*(Clique em 📝 Notas para criar)*
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="stats-row">
+                            <span>🎯 Acertos: <b>0</b></span>
+                            <span>❌ Erros: <b>0</b></span>
+                            <span style="grid-column: span 2;">📝 Resolvidas: 0 questões</span>
+                            <span style="grid-column: span 2;">📅 Agenda: <b>Sem data</b></span>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Taxa de Acertos</span>
+                                <strong>0%</strong>
+                            </div>
+                            <div class="bar"><div class="fill bad" style="width: 0%"></div></div>
+                        </div>
+
+                        <div class="mat-actions">
+                            <button title="Inverter status" onclick="toggleStatus(1,1)">✔ Concluir</button>
+                            <button title="Renomear Matéria" style="background:#222f47;" onclick="openEditMatNameModal(1,1)">✏️ Renomear</button>
+                            <button title="Mnemônicos" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2);" onclick="openNotesModal(1,1)">📝 Notas</button>
+                            <button title="Questões" onclick="openQtdModal(1,1)">📊 +Q</button>
+                            <button title="Revisão" onclick="openReviewModal(1,1)">📅</button>
+                            <button class="btn-danger" style="background:transparent; border:1px solid rgba(244,63,94,0.2); color:#fb7185;" onclick="openConfirmModal('DEL_MAT', {di:1, mi:1})">❌</button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        
+            <details class="materia-row ">
+                <summary class="materia-header-trigger">
+                    <div class="mat-title-left">
+                        <span class="chevron-icon">▶</span>
+                        <span>3 Lei Orgânica do Distrito Federal.</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <button class="btn-hide-card" onclick="hideMateriaCard(event, 1, 2)" title="Fazer este card sumir da tela provisoriamente">👁️ Ocultar</button>
+                        <span class="badge bad">Pendente</span>
+                    </div>
+                </summary>
+
+                <div class="materia-body-content">
+                    <div>
+                        <div class="timer-box">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.85rem; color:var(--text-muted);">⏱️ Foco:</span>
+                                <div class="timer-display" id="t-disp-1_2">00:00:00</div>
+                            </div>
+                            <div style="display:flex; gap:4px;">
+                                <button id="t-btn-1_2" style="padding:8px 16px; background:#1e293b; font-size:0.85rem;" onclick="toggleTimer(1,2)">▶️</button>
+                            </div>
+                        </div>
+
+                        <div class="box-mnemonico vazio">
+                            <b>💡 Mnemônico Ativo:</b>*(Clique em 📝 Notas para criar)*
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="stats-row">
+                            <span>🎯 Acertos: <b>0</b></span>
+                            <span>❌ Erros: <b>0</b></span>
+                            <span style="grid-column: span 2;">📝 Resolvidas: 0 questões</span>
+                            <span style="grid-column: span 2;">📅 Agenda: <b>Sem data</b></span>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Taxa de Acertos</span>
+                                <strong>0%</strong>
+                            </div>
+                            <div class="bar"><div class="fill bad" style="width: 0%"></div></div>
+                        </div>
+
+                        <div class="mat-actions">
+                            <button title="Inverter status" onclick="toggleStatus(1,2)">✔ Concluir</button>
+                            <button title="Renomear Matéria" style="background:#222f47;" onclick="openEditMatNameModal(1,2)">✏️ Renomear</button>
+                            <button title="Mnemônicos" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2);" onclick="openNotesModal(1,2)">📝 Notas</button>
+                            <button title="Questões" onclick="openQtdModal(1,2)">📊 +Q</button>
+                            <button title="Revisão" onclick="openReviewModal(1,2)">📅</button>
+                            <button class="btn-danger" style="background:transparent; border:1px solid rgba(244,63,94,0.2); color:#fb7185;" onclick="openConfirmModal('DEL_MAT', {di:1, mi:2})">❌</button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        
+            <details class="materia-row ">
+                <summary class="materia-header-trigger">
+                    <div class="mat-title-left">
+                        <span class="chevron-icon">▶</span>
+                        <span>6 Lei Distrital nº 7.484/2024.</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <button class="btn-hide-card" onclick="hideMateriaCard(event, 1, 3)" title="Fazer este card sumir da tela provisoriamente">👁️ Ocultar</button>
+                        <span class="badge bad">Pendente</span>
+                    </div>
+                </summary>
+
+                <div class="materia-body-content">
+                    <div>
+                        <div class="timer-box">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.85rem; color:var(--text-muted);">⏱️ Foco:</span>
+                                <div class="timer-display" id="t-disp-1_3">00:00:00</div>
+                            </div>
+                            <div style="display:flex; gap:4px;">
+                                <button id="t-btn-1_3" style="padding:8px 16px; background:#1e293b; font-size:0.85rem;" onclick="toggleTimer(1,3)">▶️</button>
+                            </div>
+                        </div>
+
+                        <div class="box-mnemonico vazio">
+                            <b>💡 Mnemônico Ativo:</b>*(Clique em 📝 Notas para criar)*
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="stats-row">
+                            <span>🎯 Acertos: <b>0</b></span>
+                            <span>❌ Erros: <b>0</b></span>
+                            <span style="grid-column: span 2;">📝 Resolvidas: 0 questões</span>
+                            <span style="grid-column: span 2;">📅 Agenda: <b>Sem data</b></span>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Taxa de Acertos</span>
+                                <strong>0%</strong>
+                            </div>
+                            <div class="bar"><div class="fill bad" style="width: 0%"></div></div>
+                        </div>
+
+                        <div class="mat-actions">
+                            <button title="Inverter status" onclick="toggleStatus(1,3)">✔ Concluir</button>
+                            <button title="Renomear Matéria" style="background:#222f47;" onclick="openEditMatNameModal(1,3)">✏️ Renomear</button>
+                            <button title="Mnemônicos" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2);" onclick="openNotesModal(1,3)">📝 Notas</button>
+                            <button title="Questões" onclick="openQtdModal(1,3)">📊 +Q</button>
+                            <button title="Revisão" onclick="openReviewModal(1,3)">📅</button>
+                            <button class="btn-danger" style="background:transparent; border:1px solid rgba(244,63,94,0.2); color:#fb7185;" onclick="openConfirmModal('DEL_MAT', {di:1, mi:3})">❌</button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </div></div></div>
+</div>
+
+<div class="modal-backdrop" id="customModal">
+    <div class="modal" id="modalContent"></div>
+</div>
+
+<script id="embedded-database" type="application/json">{"disciplinas":[{"nome":"LÍNGUA PORTUGUESA","materias":[{"nome":"1 Compreensão e interpretação de textos de gêneros variados.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"2 Reconhecimento de tipos e gêneros textuais.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"3 Domínio da ortografia oficial.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"4 Domínio dos mecanismos de coesão textual.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"4.1 Emprego de elementos de referenciação, substituição e repetição.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"4.2 Emprego de tempos e modos verbais.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5 Domínio da estrutura morfossintática do período.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.1 Emprego das classes de palavras.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.2 Relações de coordenação entre orações.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.3 Relações de subordinação entre orações.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.4 Emprego dos sinais de pontuação.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.5 Concordância verbal e nominal.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.6 Regência verbal e nominal.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.7 Emprego do sinal indicativo de crase.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5.8 Colocação dos pronomes átonos.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6 Reescrita de frases e parágrafos.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6.1 Significação das palavras.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6.2 Substituição de palavras ou trechos.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6.3 Reorganização da estrutura de orações e períodos.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6.4 Reescrita de textos de diferentes gêneros.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"CONHECIMENTOS DO DISTRITO FEDERAL","materias":[{"nome":"1 Tópicos atuais e relevantes acerca da realidade étnica, social, histórica, geográfica, cultural, política e\r\neconômica do Distrito Federal","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"RIDE.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"3 Lei Orgânica do Distrito Federal.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6 Lei Distrital nº 7.484/2024.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"ESTATUTO DO SERVIDOR","materias":[{"nome":"4 Lei Complementar nº 840/2011 e alterações.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"REESTRUTURA DA CARREIRA  PÚBLICA  DE ASSISTENCIA SOCIAL DO DF","materias":[{"nome":"1. Estrutura da carreira -\nCarreira composta por:\nEspecialista em Desenvolvimento e Assistência Social\nTécnico em Desenvolvimento e Assistência Social\nAuxiliar em Desenvolvimento e Assistência Social","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"2. Requisitos de ingresso\nIngresso exclusivamente por concurso público\nEscolaridade exigida:\nEspecialista → nível superior\nTécnico → nível médio\nAuxiliar → nível fundamental","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"3. Progressão funcional\nOcorre a cada 12 meses\nMudança dentro do mesmo padrão remuneratório\nDepende de critérios da carreira","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"4. Promoção\nMudança de classe dentro da carreira\nExige:\ntempo mínimo\navaliação de desempenho\nDiferente de progressão (Quadrix cobra muito isso)","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5. Remuneração e GDAS (ALTAMENTE COBRADO)\nReestruturação salarial com reajustes escalonados (2024–2026)\nCriação da GDAS (Gratificação de Desenvolvimento e Assistência Social)\nPercentual variável conforme atividade\nPode substituir gratificações anteriores","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6. Atribuições dos cargos (CAI MUITO)\nEspecialista → planejamento, coordenação e gestão de políticas sociais\nTécnico → execução de atividades técnicas e administrativas\nAuxiliar → apoio operacional","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"7. Capacitação profissional\nFormação continuada obrigatória\nParceria com a EGOV\nPossibilidade de afastamento para cursos com remuneração","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"8. Avaliação de desempenho\nUsada para progressão e promoção\nRealizada periodicamente\nComissão responsável pela avaliação","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"9. Jornada de trabalho\nPode haver escala de revezamento\nAplicável conforme necessidade do serviço público","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"10. Gestão da carreira\nGestão pelo órgão central de pessoal do GDF\nMobilidade funcional entre órgãos\nPreferência para servidores da carreira em cargos comissionados","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"11. Direitos e garantias\nNão redução de remuneração\nPossível VPNI (vantagem pessoal nominalmente identificada)\nIdentidade funcional","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"12. Concurso público\nÚnica forma de ingresso na carreira\nProva pode cobrar essa regra de forma direta","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"13. Diferença entre progressão e promoção (PEGADINHA CLÁSSICA)\nProgressão → mudança dentro do mesmo padrão (12 meses)\nPromoção → mudança de classe (exige tempo + avaliação)","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"POLÍTICA PARA MULHERES","materias":[{"nome":"2 Plano Distrital de Política para Mulheres (PDPM).","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5 Lei Maria da Penha – Lei Federal nº 11.340/2006.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"LEGISLAÇÃO E NOÇÕES DE PRIMEIROS SOCORROS","materias":[{"nome":"urgência","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"emergência","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"engasgo,","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"sangramento","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"fratura","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"queimadura","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"desmaio","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"convulsão","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"intoxicação","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"FUNDAMENTOS, ORGANIZAÇÃO, GESTÃO E MARCOS OPERACIONAIS DO SUAS","materias":[{"nome":"1 PNAS/2004 e organização da assistência social.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"2 SUAS: princípios, diretrizes, organização e seguranças socioassistenciais.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"3 NOB/SUAS (2012): responsabilidades dos entes, cofinanciamento, gestão do trabalho e vigilância\r\nsocioassistencial.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"PROGRAMAS, BENEFÍCIOS E INSTRUMENTOS SOCIOASSISTENCIAIS DO DISTRITO FEDERAL","materias":[{"nome":"1 Cartão Prato Cheio.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"2 Programa Cartão Gás.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"3 Plano DF Social.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"4 Benefícios Eventuais da Política de Assistência Social do DF.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5 SISAN/Restaurante Comunitário.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"NOÇÕES DE DIREITO CONSTITUCIONAL,","materias":[{"nome":"princípios fundamentais","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"direitos e garantias fundamentais","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"DIREITO ADMINISTRATIVO","materias":[{"nome":"2 Organização do Estado e Administração Pública.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"ato administrativo","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"poderes da administração pública","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"ESTATUTO DO SERVIDOR","materias":[{"nome":"1. Disposições Preliminares\nDefine o que é servidor público\nDefine o que é cargo público\nEstabelece que a lei regula servidores do DF (administração direta, autarquias e fundações)","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"2. Provimento e Investidura em Cargo Público\nEntrada no serviço público\nExige concurso público para cargos efetivos\nCargos em comissão são de livre nomeação e exoneração\nRegras de nomeação, posse e exercício","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"3. Cargos Públicos e Funções de Confiança\nTipos de cargos:\nEfetivo\nComissão\nFunções de confiança\nRegras sobre direção, chefia e assessoramento\nPercentual de cargos comissionados para servidores de carreira","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"4. Direitos e Vantagens do Servidor\nRemuneração e vantagens\nIndenizações (ex: transporte, alimentação, férias etc.)\nFérias e sua conversão em dinheiro\nLicenças e afastamentos\nAssistência à saúde","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"5. Licenças e Afastamentos\nLicença por:\ndoença em família\nserviço militar\natividade política\ninteresse particular (em alguns casos)\nRegras gerais de afastamento","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"6. Regime Previdenciário e Pensões\nAposentadoria por invalidez e outras modalidades\nPensão por morte:\nvitalícia\ntemporária\nDependentes (cônjuge, filhos, companheiro etc.)\nRegras de rateio da pensão","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"7. Deveres do Servidor\nExercer o cargo com zelo e dedicação\nCumprir ordens legais\nGuardar sigilo\nSer assíduo e pontual\nAgir com moralidade e lealdade\nDenunciar irregularidades","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"8. Proibições e Responsabilidades\nAcumulação ilegal de cargos\nNepotismo\nCondutas incompatíveis com a função pública\nResponsabilidade administrativa, civil e penal","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"9. Regime Disciplinar\nPenalidades:\nadvertência\nsuspensão\ndemissão\nProcesso administrativo disciplinar (PAD)\nInvestigação e defesa do servidor","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"10. Processo Administrativo Disciplinar (PAD)\nComo o servidor é investigado\nFases do processo\nDireito à defesa\nProvas e comissão processante","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"11. Direitos Sindicais e Associativos\nDireito à associação sindical\nRepresentação por sindicato\nDesconto em folha de contribuição sindical","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"12. Saúde do Servidor\nAtendimento médico, odontológico e psicológico\nSUS ou rede conveniada\nPlanos de saúde e ressarcimento","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"13. Disposições Finais\nRegras complementares da lei\nPrazos administrativos\nNormas de aplicação geral","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"ROTINAS ADMINISTRATIVAS","materias":[{"nome":"5 Atendimento ao público e trabalho em equipe.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"8 Administração de materiais e gestão patrimonial.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"9 Noções de compras públicas – Lei Federal nº 14.133/2021.","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"ARQUIVOLOGIA","materias":[{"nome":"protocolo,","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"digitalização e preservação de documentos","done":false,"questoes":0,"erros":0,"review":null,"tempo":0,"notas":""}]},{"nome":"ESTATUTO DO SERVIDOR","materias":[{"nome":"Disposições Preliminares (Art. 1º ao 3º)  📌 Frequência: Média  Estude:  Conceito de servidor público Conceito de cargo público Aplicação da lei Administração direta, autárquica e fundacional  Questões costumam trocar conceitos de cargo, emprego e função pública.","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Provimento, Posse e Exercício (Art. 4º ao 40)  📌 Frequência: Muito Alta  Estude:  Concurso público Nomeação Posse Exercício Estágio probatório Estabilidade Reintegração Recondução Reversão Aproveitamento O que mais cai:  ✅ Prazo para posse  ✅ Prazo para exercício  ✅ Hipóteses de perda da estabilidade  ✅ Formas de provimento","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Remoção e Redistribuição  📌 Frequência: Média  Estude:  Remoção Redistribuição Diferenças entre elas  A Quadrix gosta de questões comparativas.","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Direitos e Vantagens  📌 Frequência: ALTÍSSIMA  Estude:  Vencimento Remuneração Indenizações Gratificações Adicionais Decore:  ✅ Diferença entre vencimento e remuneração  ✅ Quando pode haver desconto  ✅ Acumulação de vantagens","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Férias e Licenças  📌 Frequência: ALTÍSSIMA  Um dos temas favoritos da Quadrix.  Estude:  Licença para tratamento de saúde Licença gestante Licença paternidade Licença por motivo de doença em pessoa da família Licença para capacitação Licença para atividade política Licença para serviço militar Questões mais comuns:  ✔ Prazo  ✔ Remuneração durante a licença  ✔ Requisitos","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Afastamentos e Concessões  📌 Frequência: Média/Alta  Estude:  Casamento Falecimento Doação de sangue Alistamento eleitoral  A banca costuma cobrar quantidade de dias.","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Direito de Petição  📌 Frequência: Média  Estude:  Requerimento Pedido de reconsideração Recurso  Principalmente:  Prazos Efeitos dos recursos","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Deveres do Servidor  📌 Frequência: ALTÍSSIMA  Art. 180.  Decore os principais deveres:  Zelo e dedicação Atualização profissional Cumprir ordens legais Guardar sigilo Ser assíduo Ser pontual Zelar pelo patrimônio público  A Quadrix adora cobrar \"assinale o dever previsto na LC 840\".","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Responsabilidades do Servidor  📌 Frequência: Muito Alta  Art. 181  Decore:  Servidor responde:  Civilmente Penalmente Administrativamente  E as responsabilidades são independentes entre si.","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Infrações Disciplinares  📌 Frequência: ALTÍSSIMA  Talvez o tema mais cobrado.  Divida em:  Infrações Leves Infrações Médias Infrações Graves  A Quadrix costuma perguntar:  \"Qual infração enseja demissão?\"","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Sanções Disciplinares  📌 Frequência: ALTÍSSIMA  Art. 195  Decore exatamente:  Advertência Suspensão Demissão Cassação de aposentadoria Destituição de cargo em comissão  Questão clássica da Quadrix.","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Processo Administrativo Disciplinar (PAD)  📌 Frequência: ALTÍSSIMA  A banca ama PAD.  Estude:  Sindicância Processo disciplinar Defesa Contraditório Ampla defesa Revisão  Questões frequentes: ✔ Prazo  ✔ Garantias do acusado  ✔ Composição da comissão  ✔ Revisão do processo","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""},{"nome":"Seguridade Social  📌 Frequência: Baixa  Estude:  Saúde Previdência Assistência social  Normalmente cai apenas 1 questão.","done":false,"acertos":0,"erros":0,"review":null,"tempo":0,"notas":""}]}]}</script>
+
+<script>
+const examDate = new Date("2026-09-06");
+
+function daysUntilExam(){
+    let now = new Date();
+    return Math.max(1, Math.ceil((examDate - now) / (1000 * 60 * 60 * 24)));
+}
+
+let db = loadData();
+let selected = null;
+let activeTimers = {}; 
+let currentStudyMode = "foco"; 
+let hiddenCardsMap = {}; 
+let undoHistoryStack = []; 
+
+function loadData(){
+    // Primeiro tenta ler o banco embutido no HTML (caso tenha sido gerado via botão Salvar Estado)
+    let embeddedTag = document.getElementById("embedded-database");
+    if (embeddedTag && embeddedTag.textContent.trim() !== "") {
+        try {
+            let parsedEmbedded = JSON.parse(embeddedTag.textContent);
+            if (parsedEmbedded && parsedEmbedded.disciplinas && parsedEmbedded.disciplinas.length > 0) {
+                // Sincroniza também com o LocalStorage para manter as sessões vinculadas se o usuário atualizar
+                localStorage.setItem("vp_master_db", JSON.stringify(parsedEmbedded));
+                return parsedEmbedded;
+            }
+        } catch(e) { console.log("Sem banco embutido válido, lendo padrão."); }
+    }
+
+    // Se não tiver banco embutido no código, lê o LocalStorage clássico do navegador
+    let data = localStorage.getItem("vp_master_db");
+    if(data && data !== "undefined" && data !== "null"){
+        try { 
+            let parsed = JSON.parse(data);
+            if(!parsed.disciplinas) parsed = { disciplinas: [] };
+            parsed.disciplinas.forEach(d => {
+                if(!d.materias) d.materias = [];
+                d.materias.forEach(m => { 
+                    if(m.tempo === undefined) m.tempo = 0; 
+                    if(m.notes === undefined && m.notas !== undefined) m.notas = m.notas;
+                    if(m.notas === undefined) m.notas = ""; 
+                });
+            });
+            return parsed;
+        } catch(e) { return {disciplinas:[]}; }
+    }
+    return {disciplinas:[]};
+}
+
+function save(){
+    localStorage.setItem("vp_master_db", JSON.stringify(db));
+}
+
+document.addEventListener('keydown', function(event) {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
+        if (undoHistoryStack.length > 0) {
+            event.preventDefault();
+            undoLastHideAction();
+        }
+    }
+});
+
+/* NOVA FUNÇÃO DE EXPORTAÇÃO INTEGRAL E AUTÔNOMA */
+function exportAsSelfContainedHTML() {
+    clearAllRunningIntervals();
+    try {
+        // Pega todo o código-fonte HTML da página atual
+        let fullHtmlSource = document.documentElement.outerHTML;
+        
+        // Cria uma string segura do banco de dados atualizado
+        let freshDbString = JSON.stringify(db);
+        
+        // Substitui a tag de banco de dados embutida pelo valor real atualizado usando Regex exato
+        let updatedHtmlSource = fullHtmlSource.replace(
+            /<script id="embedded-database" type="application\/json">([\s\S]*?)<\/script>/,
+            `<script id="embedded-database" type="application/json">${freshDbString}<\/script>`
+        );
+        
+        // Gera o arquivo HTML autônomo para download universal
+        let blob = new Blob([updatedHtmlSource], {type: "text/html;charset=utf-8"});
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = 'Aprovacao360_Atualizado.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    } catch(e) { 
+        alert("Ocorreu um erro ao processar a exportação do arquivo autônomo."); 
+    }
+}
+
+function printAllNotes() {
+    clearAllRunningIntervals();
+    if(!db.disciplinas || db.disciplinas.length === 0) return;
+
+    let printHtml = `<div class="print-only-title">🏆 CADERNO GERAL DE MNEMÔNICOS E RESUMOS</div>`;
+    let totalNotas = 0;
+
+    db.disciplinas.forEach(d => {
+        let matHtml = "";
+        d.materias.forEach(m => {
+            if(m.notas && m.notas.trim() !== "") {
+                totalNotas++;
+                matHtml += `
+                    <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+                        <div style="font-weight:bold; font-size:1.1rem; color:#000;">📌 ${m.nome}</div>
+                        <div class="box-mnemonico"><b>💡 MNEMÔNICO:</b>${m.notas.replace(/\n/g, '<br>')}</div>
+                    </div>`;
+            }
+        });
+        if(matHtml !== "") {
+            printHtml += `<div class="print-disc-section"><h2>📚 Disciplina: ${d.nome}</h2><div>${matHtml}</div></div>`;
+        }
+    });
+
+    if(totalNotas === 0) {
+        alert("Você ainda não salvou nenhum mnemônico!"); return;
+    }
+
+    let oldContent = document.getElementById("content").innerHTML;
+    let oldBannerDisplay = document.getElementById("heroBanner").style.display;
+    
+    document.getElementById("heroBanner").style.display = "none";
+    document.getElementById("content").innerHTML = printHtml;
+    window.print();
+    document.getElementById("heroBanner").style.display = oldBannerDisplay;
+    document.getElementById("content").innerHTML = oldContent;
+    if(selected !== null) openDisc(selected);
+}
+
+function openNotesModal(di, mi) {
+    let m = db.disciplinas[di].materias[mi];
+    let html = `
+        <h3>💡 Editar Mnemônicos</h3>
+        <p style="margin:0 0 12px 0; font-size:0.9rem; color:var(--text-muted);">Matéria: ${m.nome}</p>
+        <textarea id="modalNotesText" rows="9" placeholder="Escreva os macetes aqui...">${m.notas || ""}</textarea>
+        <div class="modal-buttons">
+            <button onclick="closeModal()">Cancelar</button>
+            <button class="btn-primary" onclick="submitNotes(${di},${mi})">💾 Gravar</button>
+        </div>
+    `;
+    openModalHtml(html);
+}
+
+function submitNotes(di, mi) {
+    db.disciplinas[di].materias[mi].notas = document.getElementById("modalNotesText").value;
+    save(); openDisc(di); closeModal();
+}
+
+function toggleTimer(di, mi) {
+    let timerKey = `${di}_${mi}`;
+    let btn = document.getElementById(`t-btn-${timerKey}`);
+    let display = document.getElementById(`t-disp-${timerKey}`);
+    
+    if (activeTimers[timerKey]) {
+        clearInterval(activeTimers[timerKey]);
+        delete activeTimers[timerKey];
+        if(btn) btn.innerHTML = "▶️";
+        if(display) display.classList.remove("running");
+        save(); 
+    } else {
+        if(btn) btn.innerHTML = "⏸️";
+        if(display) display.classList.add("running");
+        activeTimers[timerKey] = setInterval(() => {
+            db.disciplinas[di].materias[mi].tempo = (db.disciplinas[di].materias[mi].tempo || 0) + 1;
+            if (display) display.innerText = formatTime(db.disciplinas[di].materias[mi].tempo);
+        }, 1000);
+    }
+}
+
+function formatTime(totalSeconds) {
+    let hrs = Math.floor(totalSeconds / 3600);
+    let mins = Math.floor((totalSeconds % 3600) / 60);
+    let secs = totalSeconds % 60;
+    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function clearAllRunningIntervals() {
+    for (let key in activeTimers) { clearInterval(activeTimers[key]); }
+    activeTimers = {};
+}
+
+let currentModalAction = null;
+function openModalHtml(html) {
+    document.getElementById("modalContent").innerHTML = html;
+    document.getElementById("customModal").style.display = "flex";
+}
+function closeModal() { document.getElementById("customModal").style.display = "none"; }
+
+function openConfirmModal(type, targetData) {
+    currentModalAction = { type, data: targetData };
+    let title = "Confirmar"; let text = "Deseja prosseguir?";
+    if(type === 'DEL_DISC') { title = "Remover Disciplina"; text = "Apagará tudo vinculado a ela."; }
+    if(type === 'DEL_MAT') { title = "Excluir Matéria"; text = "Tem certeza?"; }
+    let html = `
+        <h3>${title}</h3><p style="color:var(--text-muted);">${text}</p>
+        <div class="modal-buttons">
+            <button onclick="closeModal()">Cancelar</button>
+            <button class="btn-danger" onclick="executeModalAction()">Sim, Remover</button>
+        </div>
+    `;
+    openModalHtml(html);
+}
+
+function executeModalAction() {
+    if(!currentModalAction) return;
+    const { type, data } = currentModalAction;
+    clearAllRunningIntervals();
+    if(type === 'DEL_DISC') {
+        db.disciplinas.splice(data.di, 1); selected = null; save(); renderDisc();
+        document.getElementById("content").innerHTML = `<h2 style="color:var(--text-muted); text-align:center; margin-top:100px;">👈 Selecione uma disciplina</h2>`;
+    }
+    if(type === 'DEL_MAT') { db.disciplinas[data.di].materias.splice(data.mi, 1); save(); openDisc(data.di); }
+    closeModal();
+}
+
+function openEditDiscModal(di) {
+    let d = db.disciplinas[di];
+    let html = `
+        <h3>✏️ Editar Nome da Disciplina</h3>
+        <input id="editDiscName" value="${d.nome}" autofocus>
+        <div class="modal-buttons">
+            <button onclick="closeModal()">Cancelar</button>
+            <button class="btn-primary" onclick="submitEditDisc(${di})">Salvar Nome</button>
+        </div>
+    `;
+    openModalHtml(html);
+    document.getElementById("editDiscName").addEventListener("keyup", e => { if(e.key === "Enter") submitEditDisc(di); });
+}
+
+function submitEditDisc(di) {
+    let name = document.getElementById("editDiscName").value.trim();
+    if(!name) return;
+    db.disciplinas[di].nome = name;
+    save(); renderDisc(); openDisc(di); closeModal();
+}
+
+function openEditMatNameModal(di, mi) {
+    let m = db.disciplinas[di].materias[mi];
+    let html = `
+        <h3>✏️ Editar Nome da Matéria</h3>
+        <input id="editMatName" value="${m.nome}" autofocus>
+        <div class="modal-buttons">
+            <button onclick="closeModal()">Cancelar</button>
+            <button class="btn-primary" onclick="submitEditMatName(${di},${mi})">Salvar Nome</button>
+        </div>
+    `;
+    openModalHtml(html);
+    document.getElementById("editMatName").addEventListener("keyup", e => { if(e.key === "Enter") submitEditMatName(di,mi); });
+}
+
+function submitEditMatName(di, mi) {
+    let name = document.getElementById("editMatName").value.trim();
+    if(!name) return;
+    db.disciplinas[di].materias[mi].nome = name;
+    save(); openDisc(di); closeModal();
+}
+
+function openAddMatModal(di) {
+    let html = `
+        <h3>➕ Inserir Nova Matéria</h3>
+        <input id="newMatName" placeholder="Ex: Direitos Fundamentais" autofocus>
+        <div class="modal-buttons">
+            <button onclick="closeModal()">Cancelar</button>
+            <button class="btn-primary" onclick="submitAddMat(${di})">Salvar</button>
+        </div>
+    `;
+    openModalHtml(html);
+    document.getElementById("newMatName").addEventListener("keyup", e => { if(e.key === "Enter") submitAddMat(di); });
+}
+
+function submitAddMat(di) {
+    let name = document.getElementById("newMatName").value.trim();
+    if(!name) return;
+    db.disciplinas[di].materias.push({ nome: name, done: false, acertos: 0, erros: 0, review: null, tempo: 0, notas: "" });
+    save(); openDisc(di); closeModal();
+}
+
+function openQtdModal(di, mi) {
+    let m = db.disciplinas[di].materias[mi];
+    let html = `
+        <h3>📊 Lançar Questões</h3>
+        <p style="color:var(--text-muted);">${m.nome}</p>
+        <label>Acertos:</label><input type="number" id="modalAcertos" value="0" style="margin:6px 0 12px 0;">
+        <label>Erros:</label><input type="number" id="modalErros" value="0" style="margin:6px 0 12px 0;">
+        <div class="modal-buttons"><button onclick="closeModal()">Cancelar</button><button class="btn-primary" onclick="submitQtd(${di},${mi})">Computar</button></div>
+    `;
+    openModalHtml(html);
+}
+
+function submitQtd(di, mi) {
+    db.disciplinas[di].materias[mi].acertos += parseInt(document.getElementById("modalAcertos").value) || 0;
+    db.disciplinas[di].materias[mi].erros += parseInt(document.getElementById("modalErros").value) || 0;
+    save(); openDisc(di); closeModal();
+}
+
+function openReviewModal(di, mi) {
+    let html = `
+        <h3>📅 Agendar Revisão</h3>
+        <input type="date" id="reviewDate">
+        <div class="modal-buttons"><button onclick="closeModal()">Cancelar</button><button class="btn-primary" onclick="submitReview(${di},${mi})">Definir</button></div>
+    `;
+    openModalHtml(html);
+}
+
+function submitReview(di, mi) {
+    let val = document.getElementById("reviewDate").value; if(!val) return;
+    let parts = val.split('-');
+    db.disciplinas[di].materias[mi].review = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    save(); openDisc(di); closeModal();
+}
+
+function addDisc(){
+    let input = document.getElementById("discName"); let name = input.value.trim(); if(!name) return;
+    if(!db.disciplinas) db.disciplinas = [];
+    db.disciplinas.push({ nome: name, materias: [] }); input.value = ""; save(); renderDisc(); openDisc(db.disciplinas.length - 1);
+}
+
+function renderDisc(){
+    let html = "";
+    if(db && db.disciplinas) {
+        db.disciplinas.forEach((d, i) => {
+            html += `<button class="disc-btn ${selected === i ? 'active' : ''}" onclick="openDisc(${i})"><span>📚 ${d.nome}</span><span class="counter">${d.materias ? d.materias.length : 0}</span></button>`;
+        });
+    }
+    document.getElementById("discList").innerHTML = html;
+}
+
+function changeStudyMode(mode) {
+    currentStudyMode = mode;
+    if(selected !== null) openDisc(selected);
+}
+
+function hideMateriaCard(event, di, mi) {
+    event.stopPropagation(); 
+    let key = `${di}_${mi}`;
+    hiddenCardsMap[key] = true;
+    undoHistoryStack.push(key); 
+    openDisc(di);
+}
+
+function undoLastHideAction() {
+    if (undoHistoryStack.length === 0) return;
+    let lastKey = undoHistoryStack.pop(); 
+    delete hiddenCardsMap[lastKey];       
+    if (selected !== null) openDisc(selected);
+}
+
+function resetHiddenCards() {
+    hiddenCardsMap = {};
+    undoHistoryStack = []; 
+    if(selected !== null) openDisc(selected);
+}
+
+function openDisc(i){
+    clearAllRunningIntervals(); selected = i; renderDisc();
+    let d = db.disciplinas[i];
+    if(!d.materias) d.materias = [];
+
+    let firstPendingIndex = d.materias.findIndex(m => !m.done);
+    if(firstPendingIndex === -1 && d.materias.length > 0) {
+        firstPendingIndex = 0; 
+    }
+
+    let hasHiddenCards = Object.keys(hiddenCardsMap).some(key => key.startsWith(`${i}_`));
+
+    let html = `
+        <div class="card">
+            <div class="card-header">
+                <h2>📚 ${d.nome}</h2>
+                <div style="display:flex; gap:8px;">
+                    <button style="background: #222f47;" title="Editar Disciplina" onclick="openEditDiscModal(${i})">✏️ Editar Nome</button>
+                    <button class="btn-primary" onclick="openAddMatModal(${i})">➕ Nova Matéria</button>
+                    <button class="btn-danger" style="padding:12px;" onclick="openConfirmModal('DEL_DISC', {di:${i}})">❌</button>
+                </div>
+            </div>
+
+            <div class="view-mode-selector">
+                <button class="${currentStudyMode === 'tudo' ? 'active' : ''}" onclick="changeStudyMode('tudo')">👁️ Ver Tudo Aberto</button>
+                <button class="${currentStudyMode === 'foco' ? 'active' : ''}" onclick="changeStudyMode('foco')">🎯 Modo Foco (Escolha Livre)</button>
+                <button class="${currentStudyMode === 'sequencial' ? 'active' : ''}" onclick="changeStudyMode('sequencial')">🔀 Seguir Ordem da Fila</button>
+            </div>
+
+            ${hasHiddenCards || undoHistoryStack.length > 0 ? `
+                <div class="filter-reset-bar">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="color: #94a3b8; font-weight: 500;">⚠️ Gerenciar visualização de cards nesta tela.</span>
+                        ${undoHistoryStack.length > 0 ? `
+                            <button class="btn-undo-action" onclick="undoLastHideAction()" title="Desfazer a última ocultação (Atalho: Ctrl + Z)">↩️ Desfazer Ocultar</button>
+                        ` : ''}
+                    </div>
+                    ${hasHiddenCards ? `
+                        <button onclick="resetHiddenCards()" style="padding: 6px 12px; background: var(--primary); font-size: 0.8rem;">✨ Mostrar Todos Ocultados</button>
+                    ` : ''}
+                </div>
+            ` : ''}
+
+            <div class="materia-list-container">
+    `;
+
+    if(d.materias.length === 0) {
+        html += `<p style="color:var(--text-muted); text-align:center; padding: 20px; font-style:italic;">Nenhuma matéria anexada.</p>`;
+    }
+
+    d.materias.forEach((m, mi) => {
+        let perf = performanceCalc(m);
+        let cls = perf >= 80 ? "ok" : perf >= 50 ? "warn" : "bad";
+        let badgeCls = m.done ? "ok" : "bad";
+        let totalQ = (m.acertos || 0) + (m.erros || 0);
+        let timerKey = `${i}_${mi}`;
+        
+        let notaConteudo = m.notas && m.notas.trim() !== "" ? m.notas.replace(/\n/g, '<br>') : `*(Clique em 📝 Notas para criar)*`;
+        let notaCls = m.notas && m.notas.trim() !== "" ? "" : "vazio";
+
+        let isOpenAttr = "";
+        let hiddenClasses = "";
+
+        if (currentStudyMode === "tudo") {
+            isOpenAttr = "open";
+        } else if (currentStudyMode === "foco") {
+            isOpenAttr = ""; 
+        } else if (currentStudyMode === "sequencial") {
+            if (mi === firstPendingIndex) {
+                isOpenAttr = "open";
+            } else {
+                hiddenClasses += " hidden-step"; 
+            }
+        }
+
+        if (hiddenCardsMap[`${i}_${mi}`]) {
+            hiddenClasses += " user-hidden";
+        }
+
+        html += `
+            <details class="materia-row ${hiddenClasses}" ${isOpenAttr}>
+                <summary class="materia-header-trigger">
+                    <div class="mat-title-left">
+                        <span class="chevron-icon">▶</span>
+                        <span>${m.nome}</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <button class="btn-hide-card" onclick="hideMateriaCard(event, ${i}, ${mi})" title="Fazer este card sumir da tela provisoriamente">👁️ Ocultar</button>
+                        <span class="badge ${badgeCls}">${m.done ? "Estudado" : "Pendente"}</span>
+                    </div>
+                </summary>
+
+                <div class="materia-body-content">
+                    <div>
+                        <div class="timer-box">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.85rem; color:var(--text-muted);">⏱️ Foco:</span>
+                                <div class="timer-display" id="t-disp-${timerKey}">${formatTime(m.tempo || 0)}</div>
+                            </div>
+                            <div style="display:flex; gap:4px;">
+                                <button id="t-btn-${timerKey}" style="padding:8px 16px; background:#1e293b; font-size:0.85rem;" onclick="toggleTimer(${i},${mi})">▶️</button>
+                            </div>
+                        </div>
+
+                        <div class="box-mnemonico ${notaCls}">
+                            <b>💡 Mnemônico Ativo:</b>${notaConteudo}
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="stats-row">
+                            <span>🎯 Acertos: <b>${m.acertos || 0}</b></span>
+                            <span>❌ Erros: <b>${m.erros || 0}</b></span>
+                            <span style="grid-column: span 2;">📝 Resolvidas: ${totalQ} questões</span>
+                            <span style="grid-column: span 2;">📅 Agenda: <b>${m.review || "Sem data"}</b></span>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Taxa de Acertos</span>
+                                <strong>${perf}%</strong>
+                            </div>
+                            <div class="bar"><div class="fill ${cls}" style="width: ${perf}%"></div></div>
+                        </div>
+
+                        <div class="mat-actions">
+                            <button title="Inverter status" onclick="toggleStatus(${i},${mi})">${m.done ? "⏳ Refazer" : "✔ Concluir"}</button>
+                            <button title="Renomear Matéria" style="background:#222f47;" onclick="openEditMatNameModal(${i},${mi})">✏️ Renomear</button>
+                            <button title="Mnemônicos" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2);" onclick="openNotesModal(${i},${mi})">📝 Notas</button>
+                            <button title="Questões" onclick="openQtdModal(${i},${mi})">📊 +Q</button>
+                            <button title="Revisão" onclick="openReviewModal(${i},${mi})">📅</button>
+                            <button class="btn-danger" style="background:transparent; border:1px solid rgba(244,63,94,0.2); color:#fb7185;" onclick="openConfirmModal('DEL_MAT', {di:${i}, mi:${mi}})">❌</button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        `;
+    });
+
+    html += `</div></div>`;
+    document.getElementById("content").innerHTML = html;
+}
+
+function toggleStatus(di, mi){ db.disciplinas[di].materias[mi].done = !db.disciplinas[di].materias[mi].done; save(); openDisc(di); }
+function performanceCalc(m){ let t = (m.acertos || 0) + (m.erros || 0); return t === 0 ? 0 : Math.round((m.acertos / t) * 100); }
+
+function studyPlan(){
+    clearAllRunningIntervals(); let days = daysUntilExam(); let all = [];
+    if(db && db.disciplinas) {
+        db.disciplinas.forEach(d => { 
+            if(d.materias) {
+                d.materias.forEach(m => { all.push({ disc: d.nome, mat: m.nome, perf: performanceCalc(m), tempo: m.tempo || 0 }); }); 
+            }
+        });
+    }
+    all.sort((a, b) => a.perf - b.perf);
+    let perDay = Math.max(1, Math.ceil(all.length / days)); let pick = all.slice(0, perDay);
+
+    let html = `
+        <div class="card">
+            <div class="card-header"><h2>🎯 Prioridades para Hoje</h2><span class="badge warn">${days} dias restantes</span></div>
+            <div class="materia-list-container">
+    `;
+    pick.forEach(p => {
+        let cls = p.perf >= 80 ? "ok" : p.perf >= 50 ? "warn" : "bad";
+        html += `
+            <div class="materia-row" style="padding: 20px;">
+                <span style="font-size:0.75rem; text-transform:uppercase; color:var(--primary); font-weight:800;">${p.disc}</span>
+                <h4 style="margin:6px 0 10px 0; font-size:1.15rem;">${p.mat}</h4>
+                <p style="margin:0 0 14px 0; font-size:0.85rem; color:var(--text-muted);">⏱️ Tempo: <b style="color:#60a5fa; font-family:monospace;">${formatTime(p.tempo)}</b></p>
+                <div class="progress-container" style="margin:0;"><div class="progress-info"><span>Aproveitamento</span><strong class="badge ${cls}">${p.perf}%</strong></div></div>
+            </div>`;
+    });
+    html += `</div></div>`;
+    document.getElementById("content").innerHTML = html;
+}
+
+renderDisc();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('Service Worker registrado com sucesso!'));
+  }
+</script>
+</body></html>
