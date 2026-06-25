@@ -5,26 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APROVAÇÃO 360</title>
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#060814">
     <style>
-        body { 
-            margin: 0; 
-            background-color: #060814; 
-            color: white; 
-            font-family: sans-serif; 
-            padding: 20px;
-        }
-        h1 { color: #3b82f6; }
+        /* CSS INSERIDO AQUI PARA GARANTIR FUNCIONALIDADE */
+        :root { --bg-main: #060814; --bg-sidebar: #0b0f19; --primary: #3b82f6; --text-main: #f1f5f9; }
+        body { margin: 0; background: var(--bg-main); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; font-family: sans-serif; }
+        .left { width: 310px; background: var(--bg-sidebar); padding: 20px; overflow-y: auto; }
+        .right { flex: 1; padding: 40px; overflow-y: auto; }
+        /* Garantir que o conteúdo apareça */
+        h1 { color: var(--primary); }
     </style>
 </head>
 <body>
 
-    <h1>Aprovação 360</h1>
-    <p>Se você consegue ler isto, o ecrã já não está escuro!</p>
-    
+    <div class="left" id="sidebar">
+        <h3>🚀 APROVAÇÃO 360</h3>
+        <div id="discList"></div>
+    </div>
+
+    <div class="right">
+        <h1>Painel de Estudo</h1>
+        <p>Sistema carregado com sucesso.</p>
+    </div>
+
     <script>
-        // Registro simples do PWA
+        // Função para garantir que o conteúdo carregue
+        const disciplinas = ["Língua Portuguesa", "Direito Administrativo", "Arquivologia"];
+        const list = document.getElementById('discList');
+        disciplinas.forEach(d => {
+            list.innerHTML += `<button style="width:100%; margin-bottom:10px; padding:10px;">${d}</button>`;
+        });
+
+        // Registro do Service Worker para PWA (Só funciona em HTTPS/GitHub Pages)
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(() => console.log('PWA Pronto'))
+                    .catch(err => console.log('Erro PWA', err));
+            });
         }
     </script>
 </body>
