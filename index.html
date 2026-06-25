@@ -5,41 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APROVAÇÃO 360</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#060814">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
     <style>
-        :root { --bg-main: #060814; --bg-sidebar: #0b0f19; --primary: #3b82f6; --text-main: #f1f5f9; --border-color: #222f47; }
-        body { margin: 0; background: var(--bg-main); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; font-family: sans-serif; }
-        
-        #menuToggle { display: none; position: fixed; top: 15px; left: 15px; z-index: 2000; background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
-        .left { width: 310px; background: var(--bg-sidebar); padding: 20px; border-right: 1px solid var(--border-color); overflow-y: auto; transition: 0.3s; z-index: 1000; }
-        .right { flex: 1; padding: 40px; overflow-y: auto; }
-
-        @media (max-width: 768px) {
-            #menuToggle { display: block; }
-            .left { position: fixed; left: -310px; height: 100%; box-shadow: 5px 0 15px rgba(0,0,0,0.5); }
-            .left.active { left: 0; }
-            .right { padding: 60px 20px; }
+        body { 
+            margin: 0; 
+            background-color: #060814; 
+            color: white; 
+            font-family: sans-serif; 
+            padding: 20px;
         }
+        h1 { color: #3b82f6; }
     </style>
 </head>
 <body>
 
-<button id="menuToggle">☰ Menu</button>
-<div class="left"><h3>🚀 APROVAÇÃO 360</h3></div>
-<div class="right"><h1>Painel de Estudo</h1></div>
-
-<script>
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.querySelector('.left');
-    menuToggle.addEventListener('click', () => sidebar.classList.toggle('active'));
-
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log('Erro PWA:', err));
-        });
-    }
-</script>
+    <h1>Aprovação 360</h1>
+    <p>Se você consegue ler isto, o ecrã já não está escuro!</p>
+    
+    <script>
+        // Registro simples do PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </body>
 </html>
