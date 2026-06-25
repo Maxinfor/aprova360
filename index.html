@@ -2,17 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>APROVAÇÃO 360 - Completo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APROVAÇÃO 360</title>
     <style>
-        :root { --bg-main: #060814; --bg-sidebar: #0b0f19; --bg-card: #13192b; --text-main: #f1f5f9; --primary: #3b82f6; --danger: #f43f5e; }
-        body { margin: 0; background: var(--bg-main); color: var(--text-main); font-family: sans-serif; display: flex; height: 100vh; }
+        :root {
+            --bg-main: #060814;
+            --bg-sidebar: #0b0f19;
+            --bg-card: #13192b;
+            --text-main: #f1f5f9;
+            --primary: #3b82f6;
+            --danger: #f43f5e;
+        }
+        * { box-sizing: border-box; font-family: sans-serif; }
+        body { margin: 0; background: var(--bg-main); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Layout Mobile */
+        @media (max-width: 768px) { body { flex-direction: column; } }
+        
         .left { width: 300px; background: var(--bg-sidebar); padding: 20px; overflow-y: auto; border-right: 1px solid #222f47; }
-        .right { flex: 1; padding: 40px; overflow-y: auto; }
-        input, button { padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; cursor: pointer; }
-        .disc-btn { width: 100%; padding: 12px; margin-bottom: 8px; text-align: left; background: #1e293b; border: none; color: white; border-radius: 8px; }
+        @media (max-width: 768px) { .left { width: 100%; height: 30%; border-right: none; border-bottom: 1px solid #222f47; } }
+        
+        .right { flex: 1; padding: 20px; overflow-y: auto; }
+        
+        input, button { width: 100%; padding: 12px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; cursor: pointer; }
+        .disc-btn { text-align: left; background: #1e293b; border: none; }
         .disc-btn.active { background: var(--primary); }
         .card { background: var(--bg-card); padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .timer { font-family: monospace; font-size: 1.5rem; color: #10b981; }
+        .timer { font-family: monospace; font-size: 1.8rem; color: #10b981; margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -20,13 +36,13 @@
 <div class="left">
     <h3>🚀 APROVAÇÃO 360</h3>
     <input id="discName" placeholder="Nome da Disciplina">
-    <button onclick="addDisc()">Adicionar</button>
-    <div id="discList" style="margin-top:20px;"></div>
-    <button onclick="exportData()" style="width:100%; margin-top:20px;">💾 Salvar Estado (Download)</button>
+    <button onclick="addDisc()">Adicionar Disciplina</button>
+    <div id="discList"></div>
+    <button onclick="exportData()" style="margin-top:20px; background:#10b981;">💾 Salvar Estado</button>
 </div>
 
 <div class="right" id="content">
-    <h1>Selecione ou crie uma disciplina</h1>
+    <h1>Bem-vindo</h1>
 </div>
 
 <script>
@@ -51,6 +67,7 @@
             data.push({ name: name, materias: [] });
             localStorage.setItem('aprovacao360', JSON.stringify(data));
             renderDiscs();
+            renderView();
         }
     }
 
@@ -59,24 +76,13 @@
         const d = data[currentDiscIndex];
         if(!d) return;
         
-        content.innerHTML = `
-            <h2>${d.name}</h2>
-            <button onclick="addMateria()">+ Nova Matéria</button>
-            <div id="matList"></div>
-        `;
-        
+        content.innerHTML = `<h2>${d.name}</h2><button onclick="addMateria()">+ Nova Matéria</button><div id="matList"></div>`;
         d.materias.forEach((m, i) => {
             const div = document.createElement('div');
             div.className = 'card';
-            div.innerHTML = `
-                <h3>${m.titulo}</h3>
-                <div class="timer" id="timer-${i}">00:00:00</div>
-                <button onclick="startTimer(${i})">Iniciar</button>
-                <button onclick="deleteMat(${i})" style="background:var(--danger)">Excluir</button>
-            `;
+            div.innerHTML = `<h3>${m.titulo}</h3><div class="timer" id="timer-${i}">00:00:00</div><button onclick="startTimer(${i})">Iniciar</button><button onclick="deleteMat(${i})" style="background:var(--danger)">Excluir</button>`;
             document.getElementById('matList').appendChild(div);
         });
-        renderDiscs();
     }
 
     function addMateria() {
@@ -98,9 +104,7 @@
         setInterval(() => {
             data[currentDiscIndex].materias[i].segundos++;
             let s = data[currentDiscIndex].materias[i].segundos;
-            let h = Math.floor(s/3600);
-            let m = Math.floor((s%3600)/60);
-            let sec = s%60;
+            let h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
             document.getElementById(`timer-${i}`).innerText = 
                 `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
         }, 1000);
