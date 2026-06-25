@@ -2,92 +2,91 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>APROVAÇÃO 360 - Mobile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APROVAÇÃO 360</title>
     <style>
         :root {
             --bg-main: #060814;
             --bg-sidebar: #0b0f19;
             --bg-card: #13192b;
-            --bg-input: #090d16;
-            --border-color: #222f47;
             --primary: #3b82f6;
+            --danger: #ef4444;
             --text-main: #f1f5f9;
-            --text-muted: #64748b;
         }
-
-        * { box-sizing: border-box; font-family: system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            margin: 0;
-            background: var(--bg-main);
-            color: var(--text-main);
-            display: block; /* Ajuste para mobile: empilhamento */
-            height: 100%;
-        }
-
-        /* SIDEBAR (Header no Mobile) */
-        .left {
-            width: 100%;
-            background: var(--bg-sidebar);
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .input-group { display: flex; gap: 8px; margin-top: 10px; }
-        input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: white; }
-        
-        button {
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: none;
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            min-height: 44px; /* Otimizado para toque */
-        }
-
-        /* PAINEL PRINCIPAL */
-        .right {
-            padding: 16px;
-        }
-
-        .materia-body-content {
-            display: grid;
-            grid-template-columns: 1fr; /* Força 1 coluna no mobile */
-            gap: 16px;
-        }
-
-        .card { background: var(--bg-card); padding: 16px; border-radius: 12px; margin-bottom: 16px; }
-
-        /* Ajuste para telas grandes (Desktop) */
-        @media (min-width: 768px) {
-            body { display: flex; height: 100vh; overflow: hidden; }
-            .left { width: 300px; height: 100vh; overflow-y: auto; border-bottom: none; border-right: 1px solid var(--border-color); }
-            .right { flex: 1; overflow-y: auto; padding: 40px; }
-            .materia-body-content { grid-template-columns: 1fr 1fr; }
-        }
+        body { margin: 0; background: var(--bg-main); color: var(--text-main); font-family: sans-serif; display: flex; height: 100vh; }
+        .left { width: 300px; background: var(--bg-sidebar); padding: 16px; border-right: 1px solid #222f47; }
+        .right { flex: 1; padding: 40px; }
+        .disc-item { background: var(--bg-card); padding: 10px; margin-top: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        input[type="text"] { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #222f47; background: #090d16; color: white; margin-bottom: 8px; }
+        button { cursor: pointer; border: none; border-radius: 4px; padding: 8px; }
+        .btn-add { background: var(--primary); color: white; width: 100%; }
+        .btn-del { background: var(--danger); color: white; margin-left: 10px; }
+        .concluido { text-decoration: line-through; opacity: 0.6; }
     </style>
 </head>
 <body>
 
     <div class="left">
         <h3>🚀 APROVAÇÃO 360</h3>
-        <div class="input-group">
-            <input id="discName" placeholder="Nova disciplina...">
-            <button onclick="addDisc()">➕</button>
-        </div>
-        </div>
+        <input type="text" id="discName" placeholder="Nome da disciplina...">
+        <button class="btn-add" onclick="addDisc()">Adicionar</button>
+        <div id="listaDisciplinas"></div>
+    </div>
 
     <div class="right">
-        <h1>Bem-vindo ao Aprovacao 360</h1>
-        <p>Selecione ou crie uma disciplina para começar.</p>
-        </div>
+        <h1>Painel de Controle</h1>
+        <p>Gerencie suas disciplinas e acompanhe seu progresso.</p>
+    </div>
 
     <script>
-        // Mantenha aqui a sua lógica de JavaScript original
-        function addDisc() { alert("Funcionalidade de adicionar disciplina"); }
+        let disciplinas = JSON.parse(localStorage.getItem('minhasDisciplinas')) || [];
+
+        function addDisc() {
+            const input = document.getElementById('discName');
+            const nome = input.value.trim();
+            if (nome === "") return alert("Digite o nome da disciplina!");
+
+            disciplinas.push({ id: Date.now(), nome: nome, concluido: false });
+            salvarEAtualizar();
+            input.value = "";
+        }
+
+        function toggleConcluido(id) {
+            const disc = disciplinas.find(d => d.id === id);
+            if (disc) {
+                disc.concluido = !disc.concluido;
+                salvarEAtualizar();
+            }
+        }
+
+        function removerDisc(id) {
+            disciplinas = disciplinas.filter(d => d.id !== id);
+            salvarEAtualizar();
+        }
+
+        function salvarEAtualizar() {
+            localStorage.setItem('minhasDisciplinas', JSON.stringify(disciplinas));
+            renderizar();
+        }
+
+        function renderizar() {
+            const container = document.getElementById('listaDisciplinas');
+            container.innerHTML = "";
+            
+            disciplinas.forEach(d => {
+                container.innerHTML += `
+                    <div class="disc-item">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" ${d.concluido ? 'checked' : ''} onchange="toggleConcluido(${d.id})">
+                            <span class="${d.concluido ? 'concluido' : ''}">${d.nome}</span>
+                        </div>
+                        <button class="btn-del" onclick="removerDisc(${d.id})">X</button>
+                    </div>
+                `;
+            });
+        }
+
+        renderizar();
     </script>
 </body>
 </html>
-
