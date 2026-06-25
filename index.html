@@ -16,16 +16,17 @@
         * { box-sizing: border-box; font-family: sans-serif; }
         body { margin: 0; background: var(--bg-main); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
         
-        /* Layout Mobile */
-        @media (max-width: 768px) { body { flex-direction: column; } }
-        
+        /* Layout Flexível */
         .left { width: 300px; background: var(--bg-sidebar); padding: 20px; overflow-y: auto; border-right: 1px solid #222f47; }
-        @media (max-width: 768px) { .left { width: 100%; height: 30%; border-right: none; border-bottom: 1px solid #222f47; } }
-        
         .right { flex: 1; padding: 20px; overflow-y: auto; }
         
+        @media (max-width: 768px) { 
+            body { flex-direction: column; } 
+            .left { width: 100%; height: auto; max-height: 40%; }
+        }
+        
         input, button { width: 100%; padding: 12px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; cursor: pointer; }
-        .disc-btn { text-align: left; background: #1e293b; border: none; }
+        .disc-btn { text-align: left; background: #1e293b; border: none; margin-bottom: 5px; }
         .disc-btn.active { background: var(--primary); }
         .card { background: var(--bg-card); padding: 20px; border-radius: 15px; margin-bottom: 20px; }
         .timer { font-family: monospace; font-size: 1.8rem; color: #10b981; margin: 10px 0; }
@@ -42,12 +43,18 @@
 </div>
 
 <div class="right" id="content">
-    <h1>Bem-vindo</h1>
+    <h1>Selecione ou crie uma disciplina</h1>
 </div>
 
 <script>
     let data = JSON.parse(localStorage.getItem('aprovacao360')) || [];
     let currentDiscIndex = 0;
+    let timerInterval = null;
+
+    function formatTime(s) {
+        let h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+        return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+    }
 
     function renderDiscs() {
         const list = document.getElementById('discList');
@@ -56,18 +63,18 @@
             const btn = document.createElement('button');
             btn.className = `disc-btn ${i === currentDiscIndex ? 'active' : ''}`;
             btn.innerText = d.name;
-            btn.onclick = () => { currentDiscIndex = i; renderView(); };
+            btn.onclick = () => { currentDiscIndex = i; renderDiscs(); renderView(); };
             list.appendChild(btn);
         });
     }
 
     function addDisc() {
-        const name = document.getElementById('discName').value;
-        if(name) {
-            data.push({ name: name, materias: [] });
+        const input = document.getElementById('discName');
+        if(input.value) {
+            data.push({ name: input.value, materias: [] });
             localStorage.setItem('aprovacao360', JSON.stringify(data));
+            input.value = '';
             renderDiscs();
-            renderView();
         }
     }
 
@@ -80,7 +87,7 @@
         d.materias.forEach((m, i) => {
             const div = document.createElement('div');
             div.className = 'card';
-            div.innerHTML = `<h3>${m.titulo}</h3><div class="timer" id="timer-${i}">00:00:00</div><button onclick="startTimer(${i})">Iniciar</button><button onclick="deleteMat(${i})" style="background:var(--danger)">Excluir</button>`;
+            div.innerHTML = `<h3>${m.titulo}</h3><div class="timer" id="timer-${i}">${formatTime(m.segundos)}</div><button onclick="startTimer(${i})">Iniciar</button><button onclick="deleteMat(${i})" style="background:var(--danger)">Excluir</button>`;
             document.getElementById('matList').appendChild(div);
         });
     }
@@ -94,20 +101,19 @@
         }
     }
 
+    function startTimer(i) {
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            data[currentDiscIndex].materias[i].segundos++;
+            localStorage.setItem('aprovacao360', JSON.stringify(data));
+            document.getElementById(`timer-${i}`).innerText = formatTime(data[currentDiscIndex].materias[i].segundos);
+        }, 1000);
+    }
+
     function deleteMat(i) {
         data[currentDiscIndex].materias.splice(i, 1);
         localStorage.setItem('aprovacao360', JSON.stringify(data));
         renderView();
-    }
-
-    function startTimer(i) {
-        setInterval(() => {
-            data[currentDiscIndex].materias[i].segundos++;
-            let s = data[currentDiscIndex].materias[i].segundos;
-            let h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
-            document.getElementById(`timer-${i}`).innerText = 
-                `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
-        }, 1000);
     }
 
     function exportData() {
@@ -124,3 +130,4 @@
 
 </body>
 </html>
+
