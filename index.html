@@ -6,13 +6,16 @@
     <title>APROVAÇÃO 360 - Sistema de Gestão de Estudos</title>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome 6 (gratuito) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    <!-- Estilos CSS -->
+    <!-- Estilos -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon (opcional) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 </head>
 <body>
     <div class="app-container">
@@ -24,25 +27,25 @@
                     <i class="fas fa-rocket logo-icon"></i>
                     <span>APROVAÇÃO 360</span>
                 </div>
-                <button class="btn-toggle-sidebar" id="toggleSidebar" aria-label="Toggle Sidebar">
+                <button class="btn-toggle-sidebar" id="toggleSidebar" aria-label="Recolher menu">
                     <i class="fas fa-chevron-left"></i>
                 </button>
             </div>
 
             <div class="sidebar-content">
                 <div class="disciplinas-header">
-                    <h3><i class="fas fa-book"></i> Disciplinas</h3>
+                    <h3><i class="fas fa-book-open"></i> Disciplinas</h3>
                     <span class="badge" id="totalDisciplinas">0</span>
                 </div>
 
                 <div class="add-disciplina">
                     <div class="input-group">
-                        <input type="text" id="discName" placeholder="Ex: Matemática, Português..." maxlength="50">
-                        <button class="btn-add" id="btnAddDisc" title="Adicionar disciplina">
+                        <input type="text" id="discName" placeholder="Ex: Matemática, Português..." maxlength="50" autocomplete="off">
+                        <button class="btn-add" id="btnAddDisc" title="Adicionar disciplina (Enter)">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <small class="input-helper">Pressione Enter para adicionar</small>
+                    <small class="input-helper"><i class="fas fa-keyboard"></i> Enter para adicionar</small>
                 </div>
 
                 <!-- Filtros -->
@@ -88,14 +91,14 @@
             <!-- Header -->
             <header class="main-header">
                 <div class="header-left">
-                    <button class="btn-menu" id="btnMenu" aria-label="Menu">
+                    <button class="btn-menu" id="btnMenu" aria-label="Abrir menu">
                         <i class="fas fa-bars"></i>
                     </button>
                     <h1>Painel de Controle</h1>
                 </div>
                 <div class="header-right">
                     <span class="header-date" id="currentDate"></span>
-                    <button class="btn-notification" aria-label="Notificações">
+                    <button class="btn-notification" id="btnNotification" aria-label="Notificações">
                         <i class="fas fa-bell"></i>
                         <span class="notification-badge" id="notifBadge">0</span>
                     </button>
@@ -145,7 +148,7 @@
             <!-- Progress Bar -->
             <div class="progress-container">
                 <div class="progress-header">
-                    <span>Progresso Geral</span>
+                    <span><i class="fas fa-chart-line"></i> Progresso Geral</span>
                     <span id="progressoTexto">0%</span>
                 </div>
                 <div class="progress-bar">
@@ -156,50 +159,65 @@
             <!-- Mensagens de Feedback -->
             <div id="mensagemContainer" class="mensagem-container"></div>
 
-            <!-- Grid de Disciplinas (Visualização Alternativa) -->
+            <!-- Grid de Disciplinas -->
             <section class="disciplinas-grid">
                 <div class="grid-header">
                     <h2><i class="fas fa-th-list"></i> Minhas Disciplinas</h2>
                     <div class="grid-actions">
-                        <button class="btn-view" data-view="list" id="viewList">
-                            <i class="fas fa-list"></i>
-                        </button>
-                        <button class="btn-view" data-view="grid" id="viewGrid">
+                        <button class="btn-view active" data-view="grid" id="viewGrid" title="Visualização em grade">
                             <i class="fas fa-th"></i>
+                        </button>
+                        <button class="btn-view" data-view="list" id="viewList" title="Visualização em lista">
+                            <i class="fas fa-list"></i>
                         </button>
                     </div>
                 </div>
-                <div class="disciplinas-grid-container" id="disciplinasGrid">
+                <div class="disciplinas-grid-container grid-view" id="disciplinasGrid">
                     <!-- Renderizado via JavaScript -->
                 </div>
                 <div class="empty-state" id="emptyState">
                     <i class="fas fa-graduation-cap"></i>
                     <h3>Nenhuma disciplina cadastrada</h3>
-                    <p>Adicione sua primeira disciplina para começar a acompanhar seu progresso!</p>
+                    <p>Adicione sua primeira disciplina no menu lateral e comece a acompanhar seu progresso!</p>
+                    <button class="btn-empty-action" onclick="document.getElementById('discName').focus()">
+                        <i class="fas fa-plus"></i> Adicionar Disciplina
+                    </button>
                 </div>
             </section>
-
-            <!-- Modal de Edição -->
-            <div class="modal" id="modalEditar">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Editar Disciplina</h3>
-                        <button class="modal-close" id="modalClose">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="editDiscName">Nome da Disciplina</label>
-                        <input type="text" id="editDiscName" placeholder="Digite o novo nome..." maxlength="50">
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn-cancel" id="modalCancel">Cancelar</button>
-                        <button class="btn-save" id="modalSave">Salvar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Overlay para modal -->
-            <div class="modal-overlay" id="modalOverlay"></div>
         </main>
+    </div>
+
+    <!-- ==================== MODAL DE EDIÇÃO ==================== -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="modalEditar" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-pen"></i> Editar Disciplina</h3>
+                <button class="modal-close" id="modalClose" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label for="editDiscName">Nome da Disciplina</label>
+                <input type="text" id="editDiscName" placeholder="Digite o novo nome..." maxlength="50" autocomplete="off">
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="modalCancel">Cancelar</button>
+                <button class="btn-save" id="modalSave"><i class="fas fa-save"></i> Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== NOTIFICAÇÕES ==================== -->
+    <div class="notificacoes-dropdown" id="notificacoesDropdown">
+        <div class="notificacoes-header">
+            <span>Notificações</span>
+            <button class="notif-clear" id="notifClear">Limpar todas</button>
+        </div>
+        <div class="notificacoes-list" id="notificacoesList">
+            <div class="notif-empty">
+                <i class="fas fa-check-circle"></i>
+                <p>Tudo tranquilo! Nenhuma notificação.</p>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== SCRIPTS ==================== -->
