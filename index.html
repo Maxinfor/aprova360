@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APROVAÇÃO 360 - Sistema de Gestão de Estudos</title>
+    <title>APROVAÇÃO 360</title>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome 6 (gratuito) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <!-- Estilos -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Favicon (opcional) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 </head>
 <body>
     <div class="app-container">
@@ -24,129 +16,123 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <i class="fas fa-rocket logo-icon"></i>
+                    <i class="fas fa-rocket"></i>
                     <span>APROVAÇÃO 360</span>
                 </div>
-                <button class="btn-toggle-sidebar" id="toggleSidebar" aria-label="Recolher menu">
+                <button class="btn-toggle" id="toggleSidebar">
                     <i class="fas fa-chevron-left"></i>
                 </button>
             </div>
 
             <div class="sidebar-content">
-                <div class="disciplinas-header">
-                    <h3><i class="fas fa-book-open"></i> Disciplinas</h3>
+                <div class="section-title">
+                    <i class="fas fa-book-open"></i> Disciplinas
                     <span class="badge" id="totalDisciplinas">0</span>
                 </div>
 
-                <div class="add-disciplina">
+                <div class="add-area">
                     <div class="input-group">
-                        <input type="text" id="discName" placeholder="Ex: Matemática, Português..." maxlength="50" autocomplete="off">
-                        <button class="btn-add" id="btnAddDisc" title="Adicionar disciplina (Enter)">
+                        <input type="text" id="discName" placeholder="Ex: Matemática, Português..." maxlength="50">
+                        <button class="btn-add" id="btnAddDisc">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <small class="input-helper"><i class="fas fa-keyboard"></i> Enter para adicionar</small>
+                    <span class="helper"><i class="fas fa-keyboard"></i> Enter para adicionar</span>
                 </div>
 
-                <!-- Filtros -->
-                <div class="filtros">
-                    <button class="filtro-btn active" data-filtro="all">
-                        <i class="fas fa-list"></i> Todas
-                    </button>
-                    <button class="filtro-btn" data-filtro="pending">
-                        <i class="fas fa-clock"></i> Pendentes
-                    </button>
-                    <button class="filtro-btn" data-filtro="completed">
-                        <i class="fas fa-check-circle"></i> Concluídas
-                    </button>
+                <div class="filters">
+                    <button class="filter active" data-filter="all">Todas</button>
+                    <button class="filter" data-filter="pending">Pendentes</button>
+                    <button class="filter" data-filter="completed">Concluídas</button>
                 </div>
 
-                <!-- Lista de Disciplinas -->
-                <div class="disciplinas-list" id="listaDisciplinas">
-                    <!-- Renderizado via JavaScript -->
-                </div>
-
-                <!-- Estatísticas Rápidas -->
-                <div class="stats-mini">
-                    <div class="stat-item">
-                        <span class="stat-label">Progresso</span>
-                        <span class="stat-value" id="progressoGeral">0%</span>
+                <div class="disciplines-list" id="listaDisciplinas">
+                    <div class="empty-state-mini">
+                        <i class="fas fa-inbox"></i>
+                        <p>Nenhuma disciplina cadastrada</p>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Concluídas</span>
-                        <span class="stat-value" id="totalConcluidas">0/0</span>
+                </div>
+
+                <div class="mini-stats">
+                    <div class="mini-stat">
+                        <span class="mini-label">Progresso</span>
+                        <span class="mini-value" id="progressoGeral">0%</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">Concluídas</span>
+                        <span class="mini-value" id="totalConcluidas">0/0</span>
                     </div>
                 </div>
             </div>
 
             <div class="sidebar-footer">
-                <button class="btn-limpar-tudo" id="btnLimparTudo">
+                <button class="btn-clear" id="btnLimparTudo">
                     <i class="fas fa-trash-alt"></i> Limpar Tudo
                 </button>
             </div>
         </aside>
 
-        <!-- ==================== MAIN CONTENT ==================== -->
-        <main class="main-content">
+        <!-- ==================== MAIN ==================== -->
+        <main class="main">
             <!-- Header -->
-            <header class="main-header">
+            <header class="header">
                 <div class="header-left">
-                    <button class="btn-menu" id="btnMenu" aria-label="Abrir menu">
+                    <button class="btn-menu" id="btnMenu">
                         <i class="fas fa-bars"></i>
                     </button>
                     <h1>Painel de Controle</h1>
                 </div>
                 <div class="header-right">
-                    <span class="header-date" id="currentDate"></span>
-                    <button class="btn-notification" id="btnNotification" aria-label="Notificações">
+                    <span class="date" id="currentDate"></span>
+                    <button class="btn-notification" id="btnNotification">
                         <i class="fas fa-bell"></i>
-                        <span class="notification-badge" id="notifBadge">0</span>
+                        <span class="notif-badge" id="notifBadge">0</span>
                     </button>
                 </div>
             </header>
 
-            <!-- Dashboard Stats -->
-            <section class="dashboard-stats">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+            <!-- Dashboard -->
+            <section class="dashboard">
+                <div class="card">
+                    <div class="card-icon blue">
                         <i class="fas fa-book-open"></i>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-number" id="statTotal">0</span>
-                        <span class="stat-label">Total Disciplinas</span>
+                    <div class="card-info">
+                        <span class="card-number" id="statTotal">0</span>
+                        <span class="card-label">Total</span>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                <div class="card">
+                    <div class="card-icon green">
                         <i class="fas fa-check-circle"></i>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-number" id="statConcluidas">0</span>
-                        <span class="stat-label">Concluídas</span>
+                    <div class="card-info">
+                        <span class="card-number" id="statConcluidas">0</span>
+                        <span class="card-label">Concluídas</span>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24;">
+                <div class="card">
+                    <div class="card-icon yellow">
                         <i class="fas fa-clock"></i>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-number" id="statPendentes">0</span>
-                        <span class="stat-label">Pendentes</span>
+                    <div class="card-info">
+                        <span class="card-number" id="statPendentes">0</span>
+                        <span class="card-label">Pendentes</span>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                <div class="card">
+                    <div class="card-icon red">
                         <i class="fas fa-fire"></i>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-number" id="statProgresso">0%</span>
-                        <span class="stat-label">Progresso</span>
+                    <div class="card-info">
+                        <span class="card-number" id="statProgresso">0%</span>
+                        <span class="card-label">Progresso</span>
                     </div>
                 </div>
             </section>
 
-            <!-- Progress Bar -->
-            <div class="progress-container">
+            <!-- Progresso -->
+            <div class="progress-box">
                 <div class="progress-header">
                     <span><i class="fas fa-chart-line"></i> Progresso Geral</span>
                     <span id="progressoTexto">0%</span>
@@ -156,48 +142,42 @@
                 </div>
             </div>
 
-            <!-- Mensagens de Feedback -->
-            <div id="mensagemContainer" class="mensagem-container"></div>
+            <!-- Mensagens -->
+            <div id="mensagemContainer" class="messages"></div>
 
-            <!-- Grid de Disciplinas -->
-            <section class="disciplinas-grid">
+            <!-- Grid -->
+            <section class="grid-section">
                 <div class="grid-header">
                     <h2><i class="fas fa-th-list"></i> Minhas Disciplinas</h2>
-                    <div class="grid-actions">
-                        <button class="btn-view active" data-view="grid" id="viewGrid" title="Visualização em grade">
-                            <i class="fas fa-th"></i>
-                        </button>
-                        <button class="btn-view" data-view="list" id="viewList" title="Visualização em lista">
-                            <i class="fas fa-list"></i>
-                        </button>
+                    <div class="view-buttons">
+                        <button class="view-btn active" id="viewGrid"><i class="fas fa-th"></i></button>
+                        <button class="view-btn" id="viewList"><i class="fas fa-list"></i></button>
                     </div>
                 </div>
-                <div class="disciplinas-grid-container grid-view" id="disciplinasGrid">
-                    <!-- Renderizado via JavaScript -->
-                </div>
+                <div class="grid-container" id="disciplinasGrid"></div>
                 <div class="empty-state" id="emptyState">
                     <i class="fas fa-graduation-cap"></i>
                     <h3>Nenhuma disciplina cadastrada</h3>
-                    <p>Adicione sua primeira disciplina no menu lateral e comece a acompanhar seu progresso!</p>
-                    <button class="btn-empty-action" onclick="document.getElementById('discName').focus()">
-                        <i class="fas fa-plus"></i> Adicionar Disciplina
+                    <p>Adicione sua primeira disciplina no menu lateral!</p>
+                    <button class="btn-add-first" onclick="document.getElementById('discName').focus()">
+                        <i class="fas fa-plus"></i> Adicionar
                     </button>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- ==================== MODAL DE EDIÇÃO ==================== -->
+    <!-- ==================== MODAL ==================== -->
     <div class="modal-overlay" id="modalOverlay"></div>
-    <div class="modal" id="modalEditar" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal" id="modalEditar">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle"><i class="fas fa-pen"></i> Editar Disciplina</h3>
-                <button class="modal-close" id="modalClose" aria-label="Fechar">&times;</button>
+                <h3><i class="fas fa-pen"></i> Editar</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
             </div>
             <div class="modal-body">
-                <label for="editDiscName">Nome da Disciplina</label>
-                <input type="text" id="editDiscName" placeholder="Digite o novo nome..." maxlength="50" autocomplete="off">
+                <label>Nome da Disciplina</label>
+                <input type="text" id="editDiscName" maxlength="50">
             </div>
             <div class="modal-footer">
                 <button class="btn-cancel" id="modalCancel">Cancelar</button>
@@ -206,21 +186,6 @@
         </div>
     </div>
 
-    <!-- ==================== NOTIFICAÇÕES ==================== -->
-    <div class="notificacoes-dropdown" id="notificacoesDropdown">
-        <div class="notificacoes-header">
-            <span>Notificações</span>
-            <button class="notif-clear" id="notifClear">Limpar todas</button>
-        </div>
-        <div class="notificacoes-list" id="notificacoesList">
-            <div class="notif-empty">
-                <i class="fas fa-check-circle"></i>
-                <p>Tudo tranquilo! Nenhuma notificação.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== SCRIPTS ==================== -->
     <script src="js/app.js"></script>
 </body>
 </html>
